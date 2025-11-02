@@ -1,0 +1,32 @@
+version: '3.9'
+services:
+  sakila-db:
+    image: sakiladb/postgres:latest
+    container_name: sakila-db
+    environment:
+      POSTGRES_DB: sakila
+      POSTGRES_USER: sakila
+      POSTGRES_PASSWORD: p_ssW0rd
+    ports:
+      - "5432:5432"
+  pgadmin:
+    image: dpage/pgadmin4:9.9
+    container_name: pg-admin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@sakila.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on: 
+      - sakila-db
+  sakila-backend:
+    build: ../backend/sakila
+    container_name: sakila-backend
+    depends_on:
+      - sakila-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://sakila-db:5432/sakila
+      SPRING_DATASOURCE_USERNAME: sakila
+      SPRING_DATASOURCE_PASSWORD: p_ssW0rd
+    ports:
+      - "8080:8080"
