@@ -1,0 +1,51 @@
+# Input type for filtering films
+input FilmFilter {
+    title: String
+    description: String
+    releaseYear: Int
+    language: String
+    categories: [String]       # Multiple categories (OR logic)
+    length: Int
+#    rating: String
+    actors: [String]           # Multiple actor names (OR logic)
+    sortBy: String             # "title", "releaseYear", "rating"
+    sortDirection: String      # "asc" or "desc"
+}
+
+# Actor type
+type Actor {
+    id: ID!
+    firstName: String
+    lastName: String
+}
+
+# Language type
+type Language {
+    id: ID!
+    name: String
+}
+
+# Category type
+type Category {
+    id: ID!
+    name: String
+}
+
+# Film type
+type Film {
+    id: ID!
+    title: String
+    description: String
+    releaseYear: Int
+    length: Int
+    rating: String
+    language: Language
+    category: [Category]
+    actors: [Actor]
+}
+
+# Query type
+type Query {
+    # Fetch films with optional filters, pagination, and sorting
+    films(filter: FilmFilter, limit: Int, offset: Int): [Film]
+}
