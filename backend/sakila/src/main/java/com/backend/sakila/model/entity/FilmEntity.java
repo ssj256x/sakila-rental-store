@@ -28,7 +28,7 @@ public class FilmEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "language_id")
-    private LanguageEntity languageEntity;
+    private LanguageEntity language;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -51,4 +51,10 @@ public class FilmEntity {
             inverseJoinColumns = @JoinColumn(name = "actor_id")
     )
     private Set<ActorEntity> actors = new HashSet<>();
+
+    @Column(name = "replacement_cost")
+    private Float replacementCost;
+
+    @Column(name = "rental_duration")
+    private Integer rentalDuration;
 }

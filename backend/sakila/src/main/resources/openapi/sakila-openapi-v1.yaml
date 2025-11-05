@@ -960,10 +960,10 @@ components:
           type: string
         releaseYear:
           type: integer
-        languageId:
-          type: integer
-        originalLanguageId:
-          type: integer
+        language:
+          type: string
+        originalLanguage:
+          type: string
           nullable: true
         rentalDuration:
           type: integer
@@ -993,7 +993,7 @@ components:
         categories:
           type: array
           items:
-            $ref: '#/components/schemas/Category'
+            type: string
         actors:
           type: array
           items:
@@ -1021,22 +1021,14 @@ components:
           type: integer
         name:
           type: string
-        lastUpdate:
-          type: string
-          format: date-time
 
     Actor:
       type: object
       properties:
-        actorId:
-          type: integer
         firstName:
           type: string
         lastName:
           type: string
-        lastUpdate:
-          type: string
-          format: date-time
 
     Customer:
       type: object
