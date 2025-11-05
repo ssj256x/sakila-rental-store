@@ -6,7 +6,7 @@ input FilmFilter {
     language: String
     categories: [String]       # Multiple categories (OR logic)
     length: Int
-#    rating: String
+    rating: String
     actors: [String]           # Multiple actor names (OR logic)
     sortBy: String             # "title", "releaseYear", "rating"
     sortDirection: String      # "asc" or "desc"

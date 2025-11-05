@@ -1,0 +1,709 @@
+openapi: 3.0.0
+info:
+  title: Sakila Movie Rental API
+  version: 1.0.0
+  description: >
+    REST API for managing the Sakila movie rental database.
+    Includes endpoints for films, customers, rentals, payments,
+    and admin management (films, stores, staff, inventory).
+
+servers:
+  - url: http://localhost:8080
+    description: Local development
+
+tags:
+  - name: Films
+    description: Film catalog and metadata
+  - name: Categories
+    description: Film categories
+  - name: Actors
+    description: Actor information
+  - name: Customers
+    description: Customer registration and profile management
+  - name: Rentals
+    description: Movie rental and return operations
+  - name: Payments
+    description: Payment records and operations
+  - name: Stores
+    description: Store and inventory management
+  - name: Staff
+    description: Staff and admin operations
+  - name: System
+    description: Health and version info
+
+paths:
+  /api/v1/films:
+    get:
+      tags:
+        - Films
+      summary: List all films
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          schema:
+            type: integer
+            default: 20
+        - name: title
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of films
+    post:
+      tags:
+        - Films
+      summary: Add a new film
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Film'
+      responses:
+        '201':
+          description: Film created
+  /api/v1/films/{id}:
+    get:
+      tags:
+        - Films
+      summary: Get details of a film
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Film details
+    patch:
+      tags:
+        - Films
+      summary: Update film metadata
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FilmUpdate'
+      responses:
+        '200':
+          description: Film updated
+    delete:
+      tags:
+        - Films
+      summary: Delete a film (soft delete)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Film deleted
+  /api/v1/films/search:
+    get:
+      tags:
+        - Films
+      summary: Search films by title or description
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Search results
+  /api/v1/categories:
+    get:
+      tags:
+        - Categories
+      summary: List all categories
+      responses:
+        '200':
+          description: Category list
+    post:
+      tags:
+        - Categories
+      summary: Add a new category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+      responses:
+        '201':
+          description: Category created
+  /api/v1/categories/{id}/films:
+    get:
+      tags:
+        - Categories
+      summary: List films under a category
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Films under the category
+  /api/v1/actors:
+    get:
+      tags:
+        - Actors
+      summary: List actors
+      responses:
+        '200':
+          description: Actor list
+    post:
+      tags:
+        - Actors
+      summary: Add a new actor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Actor'
+      responses:
+        '201':
+          description: Actor created
+  /api/v1/actors/{id}/films:
+    get:
+      tags:
+        - Actors
+      summary: List films for an actor
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of films
+  /api/v1/customers:
+    post:
+      tags:
+        - Customers
+      summary: Create a new customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerCreate'
+      responses:
+        '201':
+          description: Customer created
+    get:
+      tags:
+        - Customers
+      summary: List all customers
+      responses:
+        '200':
+          description: Customer list
+  /api/v1/customers/{id}:
+    get:
+      tags:
+        - Customers
+      summary: Get customer details
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Customer details
+    patch:
+      tags:
+        - Customers
+      summary: Update customer profile
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerUpdate'
+      responses:
+        '200':
+          description: Customer updated
+    delete:
+      tags:
+        - Customers
+      summary: Delete a customer
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Customer deleted
+  /api/v1/customers/{id}/rentals:
+    get:
+      tags:
+        - Rentals
+      summary: List rentals for a customer
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of rentals
+  /api/v1/rentals:
+    post:
+      tags:
+        - Rentals
+      summary: Rent a movie
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RentalRequest'
+      responses:
+        '201':
+          description: Rental created
+  /api/v1/rentals/{id}/return:
+    post:
+      tags:
+        - Rentals
+      summary: Return a rented movie
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Rental closed
+  /api/v1/payments:
+    get:
+      tags:
+        - Payments
+      summary: List all payments
+      responses:
+        '200':
+          description: Payment list
+  /api/v1/payments/{id}/refund:
+    post:
+      tags:
+        - Payments
+      summary: Process a refund
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Refund processed
+  /api/v1/stores:
+    post:
+      tags:
+        - Stores
+      summary: Add a new store
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Store'
+      responses:
+        '201':
+          description: Store created
+  /api/v1/inventory:
+    post:
+      tags:
+        - Stores
+      summary: Add new inventory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Inventory'
+      responses:
+        '201':
+          description: Inventory added
+  /api/v1/inventory/{id}:
+    patch:
+      tags:
+        - Stores
+      summary: Update inventory status
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                available:
+                  type: boolean
+      responses:
+        '200':
+          description: Inventory updated
+    delete:
+      tags:
+        - Stores
+      summary: Delete inventory item
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Inventory removed
+  /api/v1/staff:
+    post:
+      tags:
+        - Staff
+      summary: Add staff member
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Staff'
+      responses:
+        '201':
+          description: Staff created
+  /api/v1/health:
+    get:
+      tags:
+        - System
+      summary: Health check
+      responses:
+        '200':
+          description: API is healthy
+  /api/v1/version:
+    get:
+      tags:
+        - System
+      summary: Version info
+      responses:
+        '200':
+          description: Version data
+
+components:
+  schemas:
+    Film:
+      type: object
+      properties:
+        filmId:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        releaseYear:
+          type: integer
+        languageId:
+          type: integer
+        originalLanguageId:
+          type: integer
+          nullable: true
+        rentalDuration:
+          type: integer
+        rentalRate:
+          type: number
+          format: float
+        length:
+          type: integer
+        replacementCost:
+          type: number
+          format: float
+        rating:
+          type: string
+          enum:
+            - G
+            - PG
+            - PG-13
+            - R
+            - NC-17
+        specialFeatures:
+          type: array
+          items:
+            type: string
+        lastUpdate:
+          type: string
+          format: date-time
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+        actors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Actor'
+
+    FilmUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        length:
+          type: integer
+        rating:
+          type: string
+        rentalRate:
+          type: number
+          format: float
+
+    Category:
+      type: object
+      properties:
+        categoryId:
+          type: integer
+        name:
+          type: string
+        lastUpdate:
+          type: string
+          format: date-time
+
+    Actor:
+      type: object
+      properties:
+        actorId:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        lastUpdate:
+          type: string
+          format: date-time
+
+    Customer:
+      type: object
+      properties:
+        customerId:
+          type: integer
+        storeId:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        addressId:
+          type: integer
+        activebool:
+          type: boolean
+        createDate:
+          type: string
+          format: date
+        lastUpdate:
+          type: string
+          format: date-time
+
+    CustomerCreate:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+
+    CustomerUpdate:
+      type: object
+      properties:
+        email:
+          type: string
+        activebool:
+          type: boolean
+
+    Address:
+      type: object
+      properties:
+        addressId:
+          type: integer
+        address:
+          type: string
+        address2:
+          type: string
+          nullable: true
+        district:
+          type: string
+        cityId:
+          type: integer
+        postalCode:
+          type: string
+        phone:
+          type: string
+        lastUpdate:
+          type: string
+          format: date-time
+
+    City:
+      type: object
+      properties:
+        cityId:
+          type: integer
+        city:
+          type: string
+        countryId:
+          type: integer
+        lastUpdate:
+          type: string
+          format: date-time
+
+    Country:
+      type: object
+      properties:
+        countryId:
+          type: integer
+        country:
+          type: string
+        lastUpdate:
+          type: string
+          format: date-time
+
+    Rental:
+      type: object
+      properties:
+        rentalId:
+          type: integer
+        rentalDate:
+          type: string
+          format: date-time
+        inventoryId:
+          type: integer
+        customerId:
+          type: integer
+        returnDate:
+          type: string
+          format: date-time
+          nullable: true
+        staffId:
+          type: integer
+        lastUpdate:
+          type: string
+          format: date-time
+
+    RentalRequest:
+      type: object
+      properties:
+        customerId:
+          type: integer
+        inventoryId:
+          type: integer
+        rentalDays:
+          type: integer
+
+    Payment:
+      type: object
+      properties:
+        paymentId:
+          type: integer
+        customerId:
+          type: integer
+        staffId:
+          type: integer
+        rentalId:
+          type: integer
+        amount:
+          type: number
+          format: float
+        paymentDate:
+          type: string
+          format: date-time
+
+    Store:
+      type: object
+      properties:
+        storeId:
+          type: integer
+        managerStaffId:
+          type: integer
+        addressId:
+          type: integer
+        lastUpdate:
+          type: string
+          format: date-time
+
+    Inventory:
+      type: object
+      properties:
+        inventoryId:
+          type: integer
+        filmId:
+          type: integer
+        storeId:
+          type: integer
+        lastUpdate:
+          type: string
+          format: date-time
+
+    Staff:
+      type: object
+      properties:
+        staffId:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        addressId:
+          type: integer
+        email:
+          type: string
+        storeId:
+          type: integer
+        active:
+          type: boolean
+        username:
+          type: string
+        password:
+          type: string
+        lastUpdate:
+          type: string
+          format: date-time
+        picture:
+          type: string
+          format: binary
+          nullable: true
