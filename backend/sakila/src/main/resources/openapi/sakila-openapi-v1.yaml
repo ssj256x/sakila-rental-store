@@ -34,6 +34,7 @@ tags:
 paths:
   /api/v1/films:
     get:
+      operationId: listFilms
       tags:
         - Films
       summary: List all films
@@ -56,6 +57,7 @@ paths:
         '200':
           description: List of films
     post:
+      operationId: createFilm
       tags:
         - Films
       summary: Add a new film
@@ -70,6 +72,7 @@ paths:
           description: Film created
   /api/v1/films/{id}:
     get:
+      operationId: getFilmById
       tags:
         - Films
       summary: Get details of a film
@@ -83,6 +86,7 @@ paths:
         '200':
           description: Film details
     patch:
+      operationId: updateFilm
       tags:
         - Films
       summary: Update film metadata
@@ -102,6 +106,7 @@ paths:
         '200':
           description: Film updated
     delete:
+      operationId: deleteFilm
       tags:
         - Films
       summary: Delete a film (soft delete)
@@ -116,6 +121,7 @@ paths:
           description: Film deleted
   /api/v1/films/search:
     get:
+      operationId: searchFilms
       tags:
         - Films
       summary: Search films by title or description
@@ -130,6 +136,7 @@ paths:
           description: Search results
   /api/v1/categories:
     get:
+      operationId: listCategories
       tags:
         - Categories
       summary: List all categories
@@ -137,6 +144,7 @@ paths:
         '200':
           description: Category list
     post:
+      operationId: createCategory
       tags:
         - Categories
       summary: Add a new category
@@ -151,6 +159,7 @@ paths:
           description: Category created
   /api/v1/categories/{id}/films:
     get:
+      operationId: listFilmsByCategory
       tags:
         - Categories
       summary: List films under a category
@@ -165,6 +174,7 @@ paths:
           description: Films under the category
   /api/v1/actors:
     get:
+      operationId: listActors
       tags:
         - Actors
       summary: List actors
@@ -172,6 +182,7 @@ paths:
         '200':
           description: Actor list
     post:
+      operationId: createActor
       tags:
         - Actors
       summary: Add a new actor
@@ -186,6 +197,7 @@ paths:
           description: Actor created
   /api/v1/actors/{id}/films:
     get:
+      operationId: listFilmsByActor
       tags:
         - Actors
       summary: List films for an actor
@@ -200,6 +212,7 @@ paths:
           description: List of films
   /api/v1/customers:
     post:
+      operationId: createCustomer
       tags:
         - Customers
       summary: Create a new customer
@@ -213,6 +226,7 @@ paths:
         '201':
           description: Customer created
     get:
+      operationId: listCustomers
       tags:
         - Customers
       summary: List all customers
@@ -221,6 +235,7 @@ paths:
           description: Customer list
   /api/v1/customers/{id}:
     get:
+      operationId: getCustomerById
       tags:
         - Customers
       summary: Get customer details
@@ -234,6 +249,7 @@ paths:
         '200':
           description: Customer details
     patch:
+      operationId: updateCustomer
       tags:
         - Customers
       summary: Update customer profile
@@ -252,6 +268,7 @@ paths:
         '200':
           description: Customer updated
     delete:
+      operationId: deleteCustomer
       tags:
         - Customers
       summary: Delete a customer
@@ -266,6 +283,7 @@ paths:
           description: Customer deleted
   /api/v1/customers/{id}/rentals:
     get:
+      operationId: listRentalsByCustomer
       tags:
         - Rentals
       summary: List rentals for a customer
@@ -280,6 +298,7 @@ paths:
           description: List of rentals
   /api/v1/rentals:
     post:
+      operationId: createRental
       tags:
         - Rentals
       summary: Rent a movie
@@ -294,6 +313,7 @@ paths:
           description: Rental created
   /api/v1/rentals/{id}/return:
     post:
+      operationId: returnRental
       tags:
         - Rentals
       summary: Return a rented movie
@@ -308,6 +328,7 @@ paths:
           description: Rental closed
   /api/v1/payments:
     get:
+      operationId: listPayments
       tags:
         - Payments
       summary: List all payments
@@ -316,6 +337,7 @@ paths:
           description: Payment list
   /api/v1/payments/{id}/refund:
     post:
+      operationId: refundPayment
       tags:
         - Payments
       summary: Process a refund
@@ -330,6 +352,7 @@ paths:
           description: Refund processed
   /api/v1/stores:
     post:
+      operationId: createStore
       tags:
         - Stores
       summary: Add a new store
@@ -344,6 +367,7 @@ paths:
           description: Store created
   /api/v1/inventory:
     post:
+      operationId: createInventory
       tags:
         - Stores
       summary: Add new inventory
@@ -358,6 +382,7 @@ paths:
           description: Inventory added
   /api/v1/inventory/{id}:
     patch:
+      operationId: updateInventory
       tags:
         - Stores
       summary: Update inventory status
@@ -379,6 +404,7 @@ paths:
         '200':
           description: Inventory updated
     delete:
+      operationId: deleteInventory
       tags:
         - Stores
       summary: Delete inventory item
@@ -393,6 +419,7 @@ paths:
           description: Inventory removed
   /api/v1/staff:
     post:
+      operationId: createStaff
       tags:
         - Staff
       summary: Add staff member
@@ -407,6 +434,7 @@ paths:
           description: Staff created
   /api/v1/health:
     get:
+      operationId: healthCheck
       tags:
         - System
       summary: Health check
@@ -415,6 +443,7 @@ paths:
           description: API is healthy
   /api/v1/version:
     get:
+      operationId: getVersion
       tags:
         - System
       summary: Version info
