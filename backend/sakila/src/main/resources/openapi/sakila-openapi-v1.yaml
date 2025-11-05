@@ -14,8 +14,6 @@ servers:
 tags:
   - name: Films
     description: Film catalog and metadata
-  - name: Categories
-    description: Film categories
   - name: Actors
     description: Actor information
   - name: Customers
@@ -134,11 +132,11 @@ paths:
       responses:
         '200':
           description: Search results
-  /api/v1/categories:
+  /api/v1/films/categories:
     get:
       operationId: listCategories
       tags:
-        - Categories
+        - Films
       summary: List all categories
       responses:
         '200':
@@ -146,7 +144,7 @@ paths:
     post:
       operationId: createCategory
       tags:
-        - Categories
+        - Films
       summary: Add a new category
       requestBody:
         required: true
@@ -157,11 +155,11 @@ paths:
       responses:
         '201':
           description: Category created
-  /api/v1/categories/{id}/films:
+  /api/v1/films/categories/{id}/films:
     get:
       operationId: listFilmsByCategory
       tags:
-        - Categories
+        - Films
       summary: List films under a category
       parameters:
         - name: id
@@ -172,6 +170,24 @@ paths:
       responses:
         '200':
           description: Films under the category
+  /api/v1/films/ratings:
+    get:
+      operationId: listRatings
+      tags:
+        - Films
+      summary: List all film ratings
+      responses:
+        '200':
+          description: List of available film ratings
+  /api/v1/films/languages:
+    get:
+      operationId: listLanguages
+      tags:
+        - Films
+      summary: List all available languages
+      responses:
+        '200':
+          description: List of available languages
   /api/v1/actors:
     get:
       operationId: listActors
