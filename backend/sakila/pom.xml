@@ -139,9 +139,9 @@
                             <output>${project.build.directory}/generated-sources/openapi</output>
 
                             <!-- Java packages -->
-                            <apiPackage>com.sakila.api.controller</apiPackage>
-                            <modelPackage>com.sakila.api.model</modelPackage>
-                            <invokerPackage>com.sakila.api.invoker</invokerPackage>
+                            <apiPackage>com.backend.sakila.api.controller</apiPackage>
+                            <modelPackage>com.backend.sakila.api.model</modelPackage>
+                            <invokerPackage>com.backend.sakila.api.invoker</invokerPackage>
 
                             <!-- Optional metadata -->
                             <artifactId>sakila-api</artifactId>
@@ -159,6 +159,9 @@
                                 <performBeanValidation>true</performBeanValidation>
                                 <serializationLibrary>jackson</serializationLibrary>
                                 <useBeanValidation>true</useBeanValidation>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <useResponseEntity>false</useResponseEntity>
+                                <exceptionHandler>true</exceptionHandler>
                             </configOptions>
                         </configuration>
                     </execution>

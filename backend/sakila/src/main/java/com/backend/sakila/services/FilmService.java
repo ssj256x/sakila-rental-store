@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class MetaService {
+public class FilmService {
 
     private final LanguageRepository languageRepository;
     private final CategoryRepository categoryRepository;
