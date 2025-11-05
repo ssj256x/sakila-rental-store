@@ -1,6 +1,6 @@
 package com.backend.sakila.converters;
 
-import com.backend.sakila.model.MpaaRating;
+import com.backend.sakila.model.entity.MpaaRating;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

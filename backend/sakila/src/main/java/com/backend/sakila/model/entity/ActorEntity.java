@@ -1,4 +1,4 @@
-package com.backend.sakila.model;
+package com.backend.sakila.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "actor")
-public class Actor {
+public class ActorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "actor_id")

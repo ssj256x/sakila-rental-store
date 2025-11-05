@@ -1,7 +1,7 @@
 package com.backend.sakila.services;
 
-import com.backend.sakila.model.Category;
-import com.backend.sakila.model.Language;
+import com.backend.sakila.model.entity.CategoryEntity;
+import com.backend.sakila.model.entity.LanguageEntity;
 import com.backend.sakila.repository.CategoryRepository;
 import com.backend.sakila.repository.FilmRepository;
 import com.backend.sakila.repository.LanguageRepository;
@@ -20,14 +20,14 @@ public class FilmService {
 
     public List<String> getAllLanguages() {
         return languageRepository.findAll().stream()
-                .map(Language::getName)
+                .map(LanguageEntity::getName)
                 .map(String::trim)
                 .toList();
     }
 
     public List<String> getAllCategories() {
         return categoryRepository.findAll().stream()
-                .map(Category::getName)
+                .map(CategoryEntity::getName)
                 .map(String::trim)
                 .toList();
     }

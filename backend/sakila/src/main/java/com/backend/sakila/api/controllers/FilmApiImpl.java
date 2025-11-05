@@ -14,22 +14,32 @@ public class FilmApiImpl implements FilmsApi {
     public final FilmService filmService;
 
     /**
-     * GET /api/v1/films/languages : List of languages
+     * GET /api/v1/films/languages: List of languages
      *
      * @return List of available languages (status code 200)
      */
     @Override
     public List<String> listLanguages() {
-        return FilmsApi.super.listLanguages();
+        return filmService.getAllLanguages();
     }
 
+    /**
+     * GET /api/v1/films/categories: List of categories
+     *
+     * @return List of available categories (status code 200)
+     */
     @Override
     public List<String> listCategories() {
-        return FilmsApi.super.listCategories();
+        return filmService.getAllCategories();
     }
 
+    /**
+     * GET /api/v1/films/ratings: List of ratings
+     *
+     * @return List of available ratings (status code 200)
+     */
     @Override
     public List<String> listRatings() {
-        return FilmsApi.super.listRatings();
+        return filmService.getAllRatings();
     }
 }

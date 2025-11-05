@@ -1,6 +1,5 @@
-package com.backend.sakila.model;
+package com.backend.sakila.model.entity;
 
-import com.backend.sakila.converters.MpaaRatingConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +14,7 @@ import java.util.Set;
 @Entity
 @Table(name = "film")
 @ToString
-public class Film {
+public class FilmEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "film_id")
@@ -29,7 +28,7 @@ public class Film {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "language_id")
-    private Language language;
+    private LanguageEntity languageEntity;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -37,7 +36,7 @@ public class Film {
             joinColumns = @JoinColumn(name = "film_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    private Set<Category> categories = new HashSet<>();
+    private Set<CategoryEntity> categories = new HashSet<>();
 
     private Integer length;
 
@@ -51,5 +50,5 @@ public class Film {
             joinColumns = @JoinColumn(name = "film_id"),
             inverseJoinColumns = @JoinColumn(name = "actor_id")
     )
-    private Set<Actor> actors = new HashSet<>();
+    private Set<ActorEntity> actors = new HashSet<>();
 }

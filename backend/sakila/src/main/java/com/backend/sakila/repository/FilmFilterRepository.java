@@ -1,9 +1,9 @@
 package com.backend.sakila.repository;
 
-import com.backend.sakila.model.Actor;
-import com.backend.sakila.model.Category;
-import com.backend.sakila.model.Film;
-import com.backend.sakila.model.FilmFilter;
+import com.backend.sakila.model.entity.ActorEntity;
+import com.backend.sakila.model.entity.CategoryEntity;
+import com.backend.sakila.model.entity.FilmEntity;
+import com.backend.sakila.model.graphql.FilmFilter;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -19,10 +19,10 @@ public class FilmFilterRepository {
     @PersistenceContext
     private EntityManager em;
 
-    public List<Film> findFilmsByFilter(FilmFilter filter, int limit, int offset) {
+    public List<FilmEntity> findFilmsByFilter(FilmFilter filter, int limit, int offset) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Film> cq = cb.createQuery(Film.class);
-        Root<Film> film = cq.from(Film.class);
+        CriteriaQuery<FilmEntity> cq = cb.createQuery(FilmEntity.class);
+        Root<FilmEntity> film = cq.from(FilmEntity.class);
         cq.select(film).distinct(true);
 
         List<Predicate> predicates = new ArrayList<>();
@@ -43,7 +43,7 @@ public class FilmFilterRepository {
         // categories: join the categories collection (many-to-many)
         if (filter.getCategories() != null && !filter.getCategories().isEmpty()) {
             // Use LEFT join to not exclude films that might have NULL categories (if that's possible)
-            Join<Film, Category> categoryJoin = film.join("categories", JoinType.LEFT);
+            Join<FilmEntity, CategoryEntity> categoryJoin = film.join("categories", JoinType.LEFT);
             predicates.add(categoryJoin.get("name").in(filter.getCategories()));
         }
 
@@ -56,7 +56,7 @@ public class FilmFilterRepository {
         }
 
         if (filter.getActors() != null && !filter.getActors().isEmpty()) {
-            Join<Film, Actor> actorJoin = film.join("actors", JoinType.LEFT);
+            Join<FilmEntity, ActorEntity> actorJoin = film.join("actors", JoinType.LEFT);
             List<Predicate> actorPreds = new ArrayList<>();
             for (String actorName : filter.getActors()) {
                 actorPreds.add(cb.or(
@@ -80,7 +80,7 @@ public class FilmFilterRepository {
             cq.orderBy("desc".equalsIgnoreCase(filter.getSortDirection()) ? cb.desc(sortPath) : cb.asc(sortPath));
         }
 
-        TypedQuery<Film> query = em.createQuery(cq);
+        TypedQuery<FilmEntity> query = em.createQuery(cq);
         query.setFirstResult(offset);
         query.setMaxResults(limit);
         return query.getResultList();

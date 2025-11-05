@@ -1,4 +1,4 @@
-package com.backend.sakila.model;
+package com.backend.sakila.model.entity;
 
 public enum MpaaRating {
     G,

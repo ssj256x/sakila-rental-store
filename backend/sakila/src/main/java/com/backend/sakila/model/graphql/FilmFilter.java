@@ -1,4 +1,4 @@
-package com.backend.sakila.model;
+package com.backend.sakila.model.graphql;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
