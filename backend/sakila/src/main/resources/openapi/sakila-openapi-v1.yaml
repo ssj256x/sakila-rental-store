@@ -54,6 +54,10 @@ paths:
       responses:
         '200':
           description: List of films
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Film'
         '400':
           description: Bad request
           content:
@@ -113,6 +117,10 @@ paths:
       responses:
         '200':
           description: Film details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Film'
         '400':
           description: Bad request
           content:
@@ -189,6 +197,10 @@ paths:
       responses:
         '204':
           description: Film deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Film'
         '400':
           description: Bad request
           content:
@@ -960,10 +972,10 @@ components:
           type: string
         releaseYear:
           type: integer
-        language:
-          type: string
-        originalLanguage:
-          type: string
+        languageId:
+          type: integer
+        originalLanguageId:
+          type: integer
           nullable: true
         rentalDuration:
           type: integer
@@ -993,7 +1005,7 @@ components:
         categories:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/Category'
         actors:
           type: array
           items:
@@ -1021,14 +1033,22 @@ components:
           type: integer
         name:
           type: string
+        lastUpdate:
+          type: string
+          format: date-time
 
     Actor:
       type: object
       properties:
+        actorId:
+          type: integer
         firstName:
           type: string
         lastName:
           type: string
+        lastUpdate:
+          type: string
+          format: date-time
 
     Customer:
       type: object
@@ -1045,7 +1065,7 @@ components:
           type: string
         addressId:
           type: integer
-        activebool:
+        active:
           type: boolean
         createDate:
           type: string
