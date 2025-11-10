@@ -972,10 +972,10 @@ components:
           type: string
         releaseYear:
           type: integer
-        languageId:
-          type: integer
-        originalLanguageId:
-          type: integer
+        language:
+          type: string
+        originalLanguage:
+          type: string
           nullable: true
         rentalDuration:
           type: integer

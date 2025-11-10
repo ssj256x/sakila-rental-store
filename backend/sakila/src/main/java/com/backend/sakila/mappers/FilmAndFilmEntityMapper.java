@@ -5,7 +5,7 @@ import com.backend.sakila.model.entity.FilmEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(uses = {ActorAndActorEntityMapper.class})
+@Mapper(uses = {ActorAndActorEntityMapper.class, CategoryAndCategoryEntityMapper.class})
 public interface FilmAndFilmEntityMapper {
 
     /**
