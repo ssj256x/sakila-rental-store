@@ -9,6 +9,7 @@ public interface CategoryAndCategoryEntityMapper {
 
     /**
      * Map CategoryEntity to Category.
+     *
      * @param categoryEntity - CategoryEntity to be mapped.
      * @return Category - mapped Category.
      */
@@ -16,6 +17,7 @@ public interface CategoryAndCategoryEntityMapper {
 
     /**
      * Map Category to CategoryEntity.
+     *
      * @param category - Category to be mapped.
      * @return CategoryEntity - mapped CategoryEntity.
      */
