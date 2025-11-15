@@ -14,7 +14,13 @@ public enum ErrorCodes {
             HttpStatus.NOT_FOUND,
             "Requested data is not found",
             ErrorHandlers::handleNotFound
-    );
+    ),
+    REQUEST_PROCESS_ERROR(
+            HttpStatus.INTERNAL_SERVER_ERROR,
+            "Some error occurred while processing this request",
+            ErrorHandlers::handleInternalServerError
+    )
+    ;
 
     private final HttpStatus httpStatus;
     private final String message;

@@ -19,4 +19,18 @@ public class ErrorHandlers {
                 .code(code.name())
                 .message(code.getMessage());
     }
+
+    /**
+     * Handle internal server error.
+     *
+     * @param e - AppException
+     * @return Error
+     */
+    public static Error handleInternalServerError(AppException e) {
+        var code = e.getErrorCode();
+
+        return new Error()
+                .code(code.name())
+                .message(code.getMessage());
+    }
 }

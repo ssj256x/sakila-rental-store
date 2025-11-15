@@ -2,6 +2,7 @@ package com.backend.sakila.api.controllers;
 
 import com.backend.sakila.api.controller.FilmsApi;
 import com.backend.sakila.api.model.Film;
+import com.backend.sakila.exceptions.AppException;
 import com.backend.sakila.services.FilmService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,7 @@ public class FilmApiImpl implements FilmsApi {
      * @return List of available languages (status code 200)
      */
     @Override
-    public List<String> listLanguages() {
+    public List<String> listLanguages() throws AppException {
         return filmService.getAllLanguages();
     }
 
@@ -30,7 +31,7 @@ public class FilmApiImpl implements FilmsApi {
      * @return List of available categories (status code 200)
      */
     @Override
-    public List<String> listCategories() {
+    public List<String> listCategories() throws AppException {
         return filmService.getAllCategories();
     }
 
@@ -40,7 +41,7 @@ public class FilmApiImpl implements FilmsApi {
      * @return List of available ratings (status code 200)
      */
     @Override
-    public List<String> listRatings() {
+    public List<String> listRatings() throws AppException{
         return filmService.getAllRatings();
     }
 
@@ -51,7 +52,8 @@ public class FilmApiImpl implements FilmsApi {
      * @return The film (status code 200)
      */
     @Override
-    public Film getFilmById(Integer id) {
+    public Film getFilmById(Integer id) throws AppException{
         return filmService.findFilmById(id);
     }
 }
+
