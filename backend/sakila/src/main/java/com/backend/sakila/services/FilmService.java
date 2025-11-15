@@ -1,6 +1,8 @@
 package com.backend.sakila.services;
 
 import com.backend.sakila.api.model.Film;
+import com.backend.sakila.exceptions.AppException;
+import com.backend.sakila.exceptions.ErrorCodes;
 import com.backend.sakila.mappers.FilmAndFilmEntityMapper;
 import com.backend.sakila.model.entity.CategoryEntity;
 import com.backend.sakila.model.entity.LanguageEntity;
@@ -42,6 +44,8 @@ public class FilmService {
     }
 
     public Film findFilmById(Integer id) {
-        return filmRepository.findById(id).map(filmAndFilmEntityMapper::filmEntityToFilm).orElseThrow();
+        return filmRepository.findById(id)
+                .map(filmAndFilmEntityMapper::filmEntityToFilm)
+                .orElseThrow(() -> new AppException(ErrorCodes.DATA_NOT_FOUND));
     }
 }
