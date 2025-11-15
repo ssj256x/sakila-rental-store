@@ -14,7 +14,7 @@ public class ErrorHandlers {
      * @return Error
      */
     public static Error handleNotFound(AppException e) {
-        var code = e.getErrorCodes();
+        var code = e.getErrorCode();
         return new Error()
                 .code(code.name())
                 .message(code.getMessage());

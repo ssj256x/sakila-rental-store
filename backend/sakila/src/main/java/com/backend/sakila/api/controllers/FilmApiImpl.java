@@ -1,6 +1,7 @@
 package com.backend.sakila.api.controllers;
 
 import com.backend.sakila.api.controller.FilmsApi;
+import com.backend.sakila.api.model.Film;
 import com.backend.sakila.services.FilmService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -41,5 +42,16 @@ public class FilmApiImpl implements FilmsApi {
     @Override
     public List<String> listRatings() {
         return filmService.getAllRatings();
+    }
+
+    /**
+     * GET /api/v1/films/{id}: Get film by id
+     *
+     * @param id (required) The id of the film.
+     * @return The film (status code 200)
+     */
+    @Override
+    public Film getFilmById(Integer id) {
+        return filmService.findFilmById(id);
     }
 }

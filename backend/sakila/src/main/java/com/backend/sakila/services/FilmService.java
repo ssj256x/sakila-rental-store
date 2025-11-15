@@ -23,6 +23,11 @@ public class FilmService {
     private final FilmRepository filmRepository;
     private final FilmAndFilmEntityMapper filmAndFilmEntityMapper;
 
+    /**
+     * Get all languages.
+     *
+     * @return List of available languages.
+     */
     public List<String> getAllLanguages() {
         return languageRepository.findAll().stream()
                 .map(LanguageEntity::getName)
@@ -30,6 +35,11 @@ public class FilmService {
                 .toList();
     }
 
+    /**
+     * Get all categories.
+     *
+     * @return List of available categories.
+     */
     public List<String> getAllCategories() {
         return categoryRepository.findAll().stream()
                 .map(CategoryEntity::getName)
@@ -37,12 +47,23 @@ public class FilmService {
                 .toList();
     }
 
+    /**
+     * Get all ratings.
+     *
+     * @return List of available ratings.
+     */
     public List<String> getAllRatings() {
         return filmRepository.findAllRatings().stream()
                 .map(String::trim)
                 .toList();
     }
 
+    /**
+     * Get film by id.
+     *
+     * @param id The id of the film.
+     * @return The film.
+     */
     public Film findFilmById(Integer id) {
         return filmRepository.findById(id)
                 .map(filmAndFilmEntityMapper::filmEntityToFilm)
