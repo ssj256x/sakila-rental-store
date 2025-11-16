@@ -31,45 +31,6 @@ tags:
 
 paths:
   /api/v1/films:
-    get:
-      operationId: listFilms
-      tags:
-        - Films
-      summary: List all films
-      parameters:
-        - name: page
-          in: query
-          schema:
-            type: integer
-            default: 0
-        - name: size
-          in: query
-          schema:
-            type: integer
-            default: 20
-        - name: title
-          in: query
-          schema:
-            type: string
-      responses:
-        '200':
-          description: List of films
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Film'
-        '400':
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
     post:
       operationId: createFilm
       tags:
@@ -225,33 +186,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /api/v1/films/search:
-    get:
-      operationId: searchFilms
-      tags:
-        - Films
-      summary: Search films by title or description
-      parameters:
-        - name: query
-          in: query
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Search results
-        '400':
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
   /api/v1/films/categories:
     get:
       operationId: listCategories
@@ -307,39 +241,6 @@ paths:
                 $ref: '#/components/schemas/Error'
         '409':
           description: Category already exists
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-  /api/v1/films/categories/{id}/films:
-    get:
-      operationId: listFilmsByCategory
-      tags:
-        - Films
-      summary: List films under a category
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: Films under the category
-        '400':
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '404':
-          description: Category not found
           content:
             application/json:
               schema:
