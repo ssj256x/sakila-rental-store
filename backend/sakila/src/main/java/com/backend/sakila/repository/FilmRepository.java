@@ -8,6 +8,6 @@ import java.util.List;
 
 
 public interface FilmRepository extends JpaRepository<FilmEntity, Integer> {
-    @Query("SELECT DISTINCT f.rating FROM Film f")
+    @Query("SELECT DISTINCT f.rating FROM FilmEntity f")
     List<String> findAllRatings();
 }

@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:sakila_test;DB_CLOSE_DELAY=-1;MODE=MySQL;NON_KEYWORDS=VALUE
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update   # Use create-drop for cleaner tests: create-drop | update | none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+    show-sql: true
+
+  h2:
+    console:
+      enabled: false  # Set true if you want to browse H2 console during debugging
+
+logging:
+  level:
+    org.hibernate.SQL: debug
