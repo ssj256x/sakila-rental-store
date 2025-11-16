@@ -1,6 +1,7 @@
-package com.backend.sakila.controllers;
+package com.backend.sakila.api.controllers;
 
-import com.backend.sakila.model.entity.FilmEntity;
+import com.backend.sakila.api.model.Film;
+import com.backend.sakila.mappers.FilmAndFilmEntityMapper;
 import com.backend.sakila.model.graphql.FilmFilter;
 import com.backend.sakila.services.FilmFilterService;
 import lombok.RequiredArgsConstructor;
@@ -15,13 +16,19 @@ import java.util.List;
 public class FilmFilterController {
 
     private final FilmFilterService filmFilterService;
+    private final FilmAndFilmEntityMapper filmAndFilmEntityMapper;
 
     @QueryMapping
-    public List<FilmEntity> films(@Argument("filter") FilmFilter filmFilter,
-                                  @Argument Integer limit,
-                                  @Argument Integer offset) {
+    public List<Film> films(@Argument("filter") FilmFilter filmFilter,
+                            @Argument Integer limit,
+                            @Argument Integer offset) {
+
         int _limit = limit != null ? limit : 10;
         int _offset = offset != null ? offset : 0;
-        return filmFilterService.search(filmFilter, _limit, _offset);
+
+        return filmFilterService.search(filmFilter, _limit, _offset)
+                .stream()
+                .map(filmAndFilmEntityMapper::filmEntityToFilm)
+                .toList();
     }
 }
