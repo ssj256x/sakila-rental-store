@@ -21,6 +21,7 @@ public class FilmEntity {
     private Integer id;
 
     private String title;
+
     private String description;
 
     @Column(name = "release_year")
@@ -40,8 +41,6 @@ public class FilmEntity {
 
     private Integer length;
 
-//    @Convert(converter = MpaaRatingConverter.class)
-//    @Column(name = "rating", columnDefinition = "mpaa_rating")
     private String rating;
 
     @ManyToMany(fetch = FetchType.LAZY)
